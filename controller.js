@@ -2,7 +2,7 @@
 /*
 get login
  */
-export const getLogin = (req, res) => {
+exports.getLogin = (req, res) => {
     const sessionID = req.cookies['session-id'];
     if (sessionID && SESSION_IDS[sessionID]) {
 
@@ -17,7 +17,7 @@ export const getLogin = (req, res) => {
 validate credential
  */
 
-export const validateCredintial = (req, res) => {
+exports.validateCredintial = (req, res) => {
 
     const username = req.body.inputUsername;
     const password = req.body.inputPassword;
@@ -49,7 +49,7 @@ export const validateCredintial = (req, res) => {
 get CSRF
  */
 
-export const getCsrfToken = (req, res) => {
+exports.getCsrfToken = (req, res) => {
     const sessionID = req.cookies['session-id'];
 
     if (SESSION_IDS[sessionID]) {
@@ -67,7 +67,7 @@ export const getCsrfToken = (req, res) => {
 submit post
  */
 
-export const submitPost = (req, res) => {
+exports.submitPost = (req, res) => {
 
     const inputTitle = req.body.inputTitle;
     const inputContent = req.body.inputContent;
@@ -88,7 +88,7 @@ export const submitPost = (req, res) => {
 log out
  */
 
-export const logOut = (req, res) => {
+exports.logOut = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
     delete SESSION_IDS[sessionID];
@@ -104,7 +104,7 @@ export const logOut = (req, res) => {
  load home page
  */
 
-export const home = (req, res) => {
+exports.home = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
     if (sessionID && SESSION_IDS[sessionID]) {
@@ -120,6 +120,6 @@ export const home = (req, res) => {
 log out
  */
 
-export const logOut = (req, res) => {
+exports.logOut = (req, res) => {
     res.redirect('/');
 }

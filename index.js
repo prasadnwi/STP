@@ -18,7 +18,8 @@ app.use(nocache());
 // Views
 app.use(express.static('pages'));
 
-import * as controller from './controller';
+// controllers
+var controller = require('./controller');
 
 // Server Startup
 app.listen(PORT, () => {
