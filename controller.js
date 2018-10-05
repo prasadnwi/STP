@@ -1,12 +1,19 @@
+const uuidv1 = require('uuid/v1');
+const uuidv4 = require('uuid/v4');
 
+// JS Object to store Session IDs with CSRF tokens
+const SESSION_IDS = {};
 /*
 get login
  */
 exports.getLogin = (req, res) => {
+
     const sessionID = req.cookies['session-id'];
+
     if (sessionID && SESSION_IDS[sessionID]) {
 
         res.sendFile('pages/form.html', {root: __dirname});
+
     } else {
 
         res.sendFile('pages/login.html', {root: __dirname});
@@ -19,10 +26,7 @@ validate credential
 
 exports.validateCredintial = (req, res) => {
 
-    const username = req.body.inputUsername;
-    const password = req.body.inputPassword;
-
-    if (username === 'root' && password === 'root') {
+    if (req.body.inputUsername === 'admin' && req.body.inputPassword === 'root') {
 
 
         // Generating Session ID and Token
@@ -30,10 +34,10 @@ exports.validateCredintial = (req, res) => {
         const CSRF_TOKEN = uuidv4();
 
 
-        // Saving token with session ID
+        // Saving token
         SESSION_IDS[SESSION_ID] = CSRF_TOKEN;
 
-        // Setting Cookie on Header
+        // Setting Cookie
         res.setHeader('Set-Cookie', [`session-id=${SESSION_ID}`, `time=${Date.now()}`]);
 
         res.sendFile('pages/form.html', {root: __dirname});
@@ -50,12 +54,14 @@ get CSRF
  */
 
 exports.getCsrfToken = (req, res) => {
+
     const sessionID = req.cookies['session-id'];
 
     if (SESSION_IDS[sessionID]) {
 
         const response = {token: SESSION_IDS[sessionID]};
         res.json(response);
+
     } else {
 
         const error = {status: 400, message: 'Invalid Session ID'};
@@ -69,8 +75,6 @@ submit post
 
 exports.submitPost = (req, res) => {
 
-    const inputTitle = req.body.inputTitle;
-    const inputContent = req.body.inputContent;
     const inputToken = req.body.inputToken;
     const sessionID = req.cookies['session-id'];
 
@@ -78,6 +82,7 @@ exports.submitPost = (req, res) => {
     if (SESSION_IDS[sessionID] && SESSION_IDS[sessionID] === inputToken) {
 
         res.sendFile('pages/form-success.html', {root: __dirname});
+
     } else {
 
         res.sendFile('pages/form-error.html', {root: __dirname});
@@ -107,9 +112,11 @@ exports.logOut = (req, res) => {
 exports.home = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
+
     if (sessionID && SESSION_IDS[sessionID]) {
 
         res.sendFile('pages/form.html', {root: __dirname});
+
     } else {
 
         res.sendFile('pages/login.html', {root: __dirname});
@@ -121,5 +128,6 @@ log out
  */
 
 exports.logOut = (req, res) => {
+
     res.redirect('/');
 }

@@ -1,7 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const uuidv1 = require('uuid/v1');
-const uuidv4 = require('uuid/v4');
 const cookieParser = require('cookie-parser');
 const nocache = require('nocache');
 
@@ -26,8 +24,7 @@ app.listen(PORT, () => {
     console.log(`Synchronize Token Pattern Demo Started On ` + PORT);
 });
 
-// JS Object to store Session IDs with CSRF tokens
-const SESSION_IDS = {};
+
 
 // Login Page Load
 app.get('/',controller.getLogin);
