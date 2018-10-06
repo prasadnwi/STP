@@ -3,6 +3,7 @@ const uuidv4 = require('uuid/v4');
 
 // JS Object to store Session IDs with CSRF tokens
 const SESSION_IDS = {};
+
 /*
 get login
  */
@@ -23,7 +24,6 @@ exports.getLogin = (req, res) => {
 /*
 validate credential
  */
-
 exports.validateCredintial = (req, res) => {
 
     if (req.body.inputUsername === 'admin' && req.body.inputPassword === 'root') {
@@ -52,7 +52,6 @@ exports.validateCredintial = (req, res) => {
 /*
 get CSRF
  */
-
 exports.getCsrfToken = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
@@ -72,7 +71,6 @@ exports.getCsrfToken = (req, res) => {
 /*
 submit post
  */
-
 exports.submitPost = (req, res) => {
 
     const inputToken = req.body.inputToken;
@@ -92,7 +90,6 @@ exports.submitPost = (req, res) => {
 /*
 log out
  */
-
 exports.logOut = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
@@ -108,7 +105,6 @@ exports.logOut = (req, res) => {
 /*
  load home page
  */
-
 exports.home = (req, res) => {
 
     const sessionID = req.cookies['session-id'];
@@ -126,7 +122,6 @@ exports.home = (req, res) => {
 /*
 log out
  */
-
 exports.logOut = (req, res) => {
 
     res.redirect('/');
